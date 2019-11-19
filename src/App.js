@@ -11,21 +11,27 @@ class App extends Component {
   render() {
     return (
       <Router>
-                <div className="container">
+        <div className="container">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link to="/" className="navbar-brand">HomePage</Link>
+            <Link to="/" className="navbar-brand">
+              HomePage
+            </Link>
             <div className="collpase navbar-collapse">
               <ul className="navbar-nav mr-auto">
                 <li className="navbar-item">
-                  <Link to="/login/" className="nav-link">Login</Link>
+                  <Link to="/login/" className="nav-link">
+                    Login
+                  </Link>
                 </li>
                 <li className="navbar-item">
-                  <Link to="/createaccount" className="nav-link">Create Account</Link>
+                  <Link to="/createaccount" className="nav-link">
+                    Create Account
+                  </Link>
                 </li>
               </ul>
             </div>
           </nav>
-          <br/>
+          <br />
           <Route path="/" exact component={MainPageTodo} />
           <Route path="/login/:username" component={UsernameTodo} />
           <Route path="/createaccount" component={CreateAccount} />

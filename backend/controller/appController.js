@@ -2,15 +2,13 @@ var User = require("../model/appModel.js");
 
 exports.list_all_users = function(req, res) {
   User.getAllUsers(function(err, user) {
-    console.log("controller");
     if (err) res.send(err);
-    console.log("res,test2", user);
+    console.log(res, user);
     res.send(user);
   });
 };
 
 exports.create_account = function(req, res) {
-  console.log('test ca',req)
   var new_user = new User(req.body);
   console.log('Creating a new user');
   //handles null error

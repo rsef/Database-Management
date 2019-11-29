@@ -2,7 +2,6 @@ var sql = require('./db.js');
 
 //User object constructor
 var User = function(user){
-    console.log('wat')
     this.username = user.username;
     this.email = user.email;
     this.password = user.password

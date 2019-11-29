@@ -6,7 +6,6 @@ module.exports = function(app) {
   .get(controller.list_all_users);
 
   app.route("/createaccount")
-  .get(controller.list_all_users)
   .post(controller.create_account);
 
   app.route("/login/:username")

@@ -2,7 +2,14 @@ module.exports = function(app) {
   var controller = require("../controller/appController");
 
   // controller Routes
-  app.route("/createaccount").post(controller.create_account);
+  app.route("/")
+  .get(controller.list_all_users);
 
-  app.route("/login/:username").post(controller.login);
+  app.route("/createaccount")
+  .get(controller.list_all_users)
+  .post(controller.create_account);
+
+  app.route("/login/:username")
+  .get(controller.getUserByUsername)
+  .post(controller.getUserByUsername);
 };

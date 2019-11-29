@@ -25,7 +25,7 @@ class App extends Component {
                 </li>
                 <li className="navbar-item">
                   <Link to="/createaccount" className="nav-link">
-                    Create Account
+                    Sign Up To Donate
                   </Link>
                 </li>
               </ul>

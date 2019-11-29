@@ -2,9 +2,11 @@ var sql = require('./db.js');
 
 //User object constructor
 var User = function(user){
-    this.user = user.user;
-    this.status = user.status;
-    this.created_at = new Date();
+    console.log('wat')
+    this.username = user.username;
+    this.email = user.email;
+    this.password = user.password
+    this.create_time = new Date();
 };
 User.createUser = function (newUser, result) {    
         sql.query("INSERT INTO users set ?", newUser, function (err, res) {
@@ -19,8 +21,8 @@ User.createUser = function (newUser, result) {
                 }
             });           
 };
-User.getUserById = function (userId, result) {
-        sql.query("Select username from user where id = ? ", userId, function (err, res) {             
+User.getUserByUsername = function (userName, result) {  
+        sql.query("Select username from user where username = ? ", userName, function (err, res) {             
                 if(err) {
                     console.log("error: ", err);
                     result(err, null);
@@ -31,8 +33,8 @@ User.getUserById = function (userId, result) {
                 }
             });   
 };
-User.getAllUser = function (result) {
-        sql.query("Select * from users", function (err, res) {
+User.getAllUsers = function (result) {
+        sql.query("Select * from user", function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
@@ -45,8 +47,8 @@ User.getAllUser = function (result) {
                 }
             });   
 };
-User.updateById = function(id, user, result){
-  sql.query("UPDATE users SET user = ? WHERE id = ?", [user.user, id], function (err, res) {
+User.updateByUsername = function(user, result){
+  sql.query("UPDATE users WHERE username = ?", [user.username], function (err, res) {
           if(err) {
               console.log("error: ", err);
                 result(null, err);
@@ -56,8 +58,8 @@ User.updateById = function(id, user, result){
                 }
             }); 
 };
-User.remove = function(id, result){
-     sql.query("DELETE FROM users WHERE id = ?", [id], function (err, res) {
+User.remove = function(username, result){
+     sql.query("DELETE FROM users WHERE username = ?", [username], function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);

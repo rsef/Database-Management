@@ -1,19 +1,20 @@
 var User = require("../model/appModel.js");
 
 exports.list_all_users = function(req, res) {
-  User.getAllUser(function(err, user) {
+  User.getAllUsers(function(err, user) {
     console.log("controller");
     if (err) res.send(err);
-    console.log("res", user);
+    console.log("res,test2", user);
     res.send(user);
   });
 };
 
 exports.create_account = function(req, res) {
+  console.log('test ca',req)
   var new_user = new User(req.body);
-
+  console.log('Creating a new user');
   //handles null error
-  if (!new_user.user || !new_user.status) {
+  if (!new_user.username) {
     res
       .status(400)
       .send({ error: true, message: "Please provide user/status" });
@@ -25,22 +26,22 @@ exports.create_account = function(req, res) {
   }
 };
 
-exports.login = function(req, res) {
-  User.getUserById(req.params.userId, function(err, user) {
+exports.getUserByUsername = function(req, res) {
+  User.getUserByUsername(req.params.username, function(err, user) {
     if (err) res.send(err);
     res.json(user);
   });
 };
 
 exports.update_a_user = function(req, res) {
-  User.updateById(req.params.userId, new User(req.body), function(err, user) {
+  User.updateByUsername(req.params.username, new User(req.body), function(err, user) {
     if (err) res.send(err);
     res.json(user);
   });
 };
 
 exports.delete_a_user = function(req, res) {
-  User.remove(req.params.userId, function(err, user) {
+  User.remove(req.params.username, function(err, user) {
     if (err) res.send(err);
     res.json({ message: "User successfully deleted" });
   });

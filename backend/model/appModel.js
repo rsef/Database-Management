@@ -2,10 +2,15 @@ var sql = require('./db.js');
 
 //User object constructor
 var User = function(user){
+    this.firstname =user.firstname;
+    this.lastname = user.lastname;    
     this.username = user.username;
     this.email = user.email;
-    this.password = user.password
-    this.create_time = new Date();
+    this.pass = user.passw;
+    this.age = user.age;
+    this.phone =user.phone;
+    this.sex = user.sex;
+//    this.diseases = user.diseases;
 };
 User.createUser = function (newUser, result) {    
         sql.query("INSERT INTO users set ?", newUser, function (err, res) {
@@ -21,7 +26,7 @@ User.createUser = function (newUser, result) {
             });           
 };
 User.getUserByUsername = function (userName, result) {  
-        sql.query("Select username from user where username = ? ", userName, function (err, res) {             
+        sql.query("Select * from users where username = ? ", userName, function (err, res) {             
                 if(err) {
                     console.log("error: ", err);
                     result(err, null);
@@ -33,7 +38,7 @@ User.getUserByUsername = function (userName, result) {
             });   
 };
 User.getAllUsers = function (result) {
-        sql.query("Select * from user", function (err, res) {
+        sql.query("Select * from users", function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
@@ -46,8 +51,8 @@ User.getAllUsers = function (result) {
                 }
             });   
 };
-User.updateByUsername = function(user, result){
-  sql.query("UPDATE users WHERE username = ?", [user.username], function (err, res) {
+User.updateByUsername = function(user,username, result){
+  sql.query("UPDATE users SET user = ? WHERE username = ?", [user,user.username], function (err, res) {
           if(err) {
               console.log("error: ", err);
                 result(null, err);

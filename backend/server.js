@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const cors = require("cors");
+var cors = require("cors");
 const db = require("./model/db");
 
 const PORT = 4000;
@@ -20,3 +20,4 @@ app.use(bodyParser.json());
 
 var routes = require("./routes/appRoutes"); //importing route
 routes(app); //register the route
+

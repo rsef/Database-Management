@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class CreateAccount extends Component {
     constructor(props) {
@@ -20,11 +21,11 @@ export default class CreateAccount extends Component {
             lastname: '',            
             username: '',
             email: '',
-            password: '',
+            pass: '',
             age: '',
             phone: '',
             sex: '',
-            diseases: '',
+            diseases: ''
         }
     }
 
@@ -53,7 +54,7 @@ onChangeLastName(e) {
 
     onChangePassword(e) {
         this.setState({
-            password: e.target.value
+            pass: e.target.value
         });
     }
     onChangeAge(e) {
@@ -87,22 +88,35 @@ onChangeLastName(e) {
         console.log(`Lastname: ${this.state.lastname}`);                
         console.log(`Username: ${this.state.username}`);
         console.log(`Email: ${this.state.email}`);
-        console.log(`Password: ${this.state.password}`);
+        console.log(`Password: ${this.state.pass}`);
         console.log(`Age: ${this.state.age}`);
         console.log(`Phone: ${this.state.phone}`);
         console.log(`Sex: ${this.state.sex}`);
         console.log(`Diseases: ${this.state.diseases}`);
 
+        const newUser = {
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+            username: this.state.username,
+            email: this.state.email,
+            pass: this.state.password,
+            age: this.state.age,
+            phone: this.state.phone,
+            sex: this.state.sex,
+        };
+        console.log(newUser)
+        axios.post('http://localhost:4000/createaccount',newUser).then(res => console.log(res.data));
+        
         this.setState({
             firstname: '',
-            lastname: '',
+            lastname: '',            
             username: '',
             email: '',
-            password: '',
+            pass: '',
             age: '',
             phone: '',
             sex: '',
-            diseases: '',
+            diseases: ''            
         })
     }
     render() {
@@ -151,7 +165,15 @@ onChangeLastName(e) {
                             <label className="form-check-label">Female</label>
                         </div>
                     </div>
-
+                    <div className="form-group">
+                        <label>Age: </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.age}
+                                onChange={this.onChangeAge}
+                                />
+                    </div>
                     <div className="form-group">
                         <input type="submit" value="Sign up" className="btn btn-primary" />
                     </div>

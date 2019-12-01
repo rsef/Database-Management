@@ -11,4 +11,7 @@ module.exports = function(app) {
   app.route("/login/:username")
   .get(controller.getUserByUsername)
   .post(controller.getUserByUsername);
+
+  app.route("/update/:username")
+  .post(controller.getUserByUsername);
 };

@@ -10,13 +10,13 @@ exports.list_all_users = function(req, res) {
 
 exports.create_account = function(req, res) {
   var new_user = new User(req.body);
-  console.log('Creating a new user');
   //handles null error
-  if (!new_user.username) {
+  if (!new_user.firstname|| !new_user.lastname) {
     res
       .status(400)
-      .send({ error: true, message: "Please provide user/status" });
+      .send({ error: true, message: "Please provide both a first name and a last" });
   } else {
+    console.log('Creating a new user');
     User.createUser(new_user, function(err, user) {
       if (err) res.send(err);
       res.json(user);

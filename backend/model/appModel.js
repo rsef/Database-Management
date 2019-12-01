@@ -10,6 +10,7 @@ var User = function(user){
     this.age = user.age;
     this.phone =user.phone;
     this.sex = user.sex;
+    this.location = user.location;
 //    this.diseases = user.diseases;
 };
 User.createUser = function (newUser, result) {    

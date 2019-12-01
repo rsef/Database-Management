@@ -14,6 +14,7 @@ export default class CreateAccount extends Component {
         this.onChangePhone = this.onChangePhone.bind(this);
         this.onChangeSex = this.onChangeSex.bind(this);
         this.onChangeDiseases = this.onChangeDiseases.bind(this);
+        this.onChangeLocation = this.onChangeLocation.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -25,7 +26,8 @@ export default class CreateAccount extends Component {
             age: '',
             phone: '',
             sex: '',
-            diseases: ''
+            diseases: '',
+            location: ''
         }
     }
 
@@ -80,6 +82,11 @@ onChangeLastName(e) {
             diseases: e.target.value
         });
     }
+    onChangeLocation(e) {
+        this.setState({
+            location: e.target.value
+        });
+    }    
     onSubmit(e) { // Reset object after inputting data
         e.preventDefault(); // untill DB implemented prevent it from functioning
         
@@ -93,6 +100,7 @@ onChangeLastName(e) {
         console.log(`Phone: ${this.state.phone}`);
         console.log(`Sex: ${this.state.sex}`);
         console.log(`Diseases: ${this.state.diseases}`);
+        console.log(`Diseases: ${this.state.location}`);
 
         const newUser = {
             firstname: this.state.firstname,
@@ -103,6 +111,7 @@ onChangeLastName(e) {
             age: this.state.age,
             phone: this.state.phone,
             sex: this.state.sex,
+            location: this.state.location
         };
         console.log(newUser)
         axios.post('http://localhost:4000/createaccount',newUser).then(res => console.log(res.data));
@@ -116,13 +125,14 @@ onChangeLastName(e) {
             age: '',
             phone: '',
             sex: '',
-            diseases: ''            
+            diseases: '',
+            location: ''            
         })
     }
     render() {
         return (
             <div style={{marginTop: 10}}>
-                <h3>Create New User</h3>
+                <h3>Sign up here</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group"> 
                         <label>First Name: </label>
@@ -168,12 +178,24 @@ onChangeLastName(e) {
                     <div className="form-group">
                         <label>Age: </label>
                         <input 
-                                type="text" 
+                                type="number" 
                                 className="form-control"
                                 value={this.state.age}
                                 onChange={this.onChangeAge}
                                 />
                     </div>
+                    <div className="form-group">
+                        <label>Location:
+                            <select value={this.state.value} onChange={this.onChangeLocation}>
+                                <option value="Manhattan">Manhattan</option>
+                                <option value="Bronx">Bronx</option>
+                                <option value="Brooklynt">Brooklyn</option>
+                                <option value="Queens">Queens</option>
+                                <option value="Staten Island">Staten Island</option>
+                            </select>
+                        </label>
+                    </div>   
+                                     
                     <div className="form-group">
                         <input type="submit" value="Sign up" className="btn btn-primary" />
                     </div>

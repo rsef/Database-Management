@@ -4,7 +4,8 @@ import './App.css';
 
 import Navbar from './components/navbar/navbar';
 import Home from './components/home/home';
-import DonorForm from './components/donor/donorForm'
+import DonorForm from './components/donor/donorForm';
+import Login from './components/login/login';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/donorform' component={DonorForm} />
+          <Route path='/login' component={Login}/>
           
         </Switch>
       </div>

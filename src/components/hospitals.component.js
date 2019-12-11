@@ -7,10 +7,11 @@ const url = 'http://localhost:4000';
 
 const Hospital = props => (
     <tr>
-        <td className={props.hospital.information ? 'deleted' : ''}>{props.hospital.location}</td>
-        <td className={props.hospital.information ? 'deleted' : ''}>{props.hospital.hospital_name}</td>
-        <td className={props.hospital.information ? 'deleted' : ''}>{props.hospital.percentage_stored}</td>
-        <td className={props.hospital.information ? 'deleted' : ''}>{props.hospital.date_of_report}</td>
+        <td>{props.hospital.location}</td>
+        <td>{props.hospital.hospital_name}</td>
+        <td>{props.hospital.blood_type}</td>
+        <td>{props.hospital.percentage_stored}</td>
+        <td>{props.hospital.date_of_report}</td>
     </tr>
     
 )
@@ -60,6 +61,7 @@ export default class Hospitals extends Component {
                     <table className="table table-striped" style={{ marginTop: 20 }}>
                         <thead>
                             <tr>
+                                <th>Hospital Location</th>
                                 <th>Hospital Name</th>
                                 <th>Blood Type</th>
                                 <th>% Availiable</th>

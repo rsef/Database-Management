@@ -7,13 +7,13 @@ const url = 'http://localhost:4000';
 
 const Account = props => (
     <tr>
-        <td className={props.user.information ? 'deleted' : ''}>{props.user.firstname}</td>
-        <td className={props.user.information ? 'deleted' : ''}>{props.user.lastname}</td>
-        <td className={props.user.information ? 'deleted' : ''}>{props.user.email}</td>
-        <td className={props.user.information ? 'deleted' : ''}>{props.user.age}</td>
-        <td className={props.user.information ? 'deleted' : ''}>{props.user.phone}</td>
-        <td className={props.user.information ? 'deleted' : ''}>{props.user.sex}</td>
-        <td className={props.user.information ? 'deleted' : ''}>{props.user.location}</td>
+        <td>{props.user.firstname}</td>
+        <td>{props.user.lastname}</td>
+        <td>{props.user.email}</td>
+        <td>{props.user.age}</td>
+        <td>{props.user.phone}</td>
+        <td>{props.user.sex}</td>
+        <td>{props.user.location}</td>
         <td>
         <Link to={"/edit/"+props.user.id}>Update</Link>
         </td>

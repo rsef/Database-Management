@@ -99,7 +99,18 @@ exports.update_a_donar_by_id = function(req, res) {
     res.json(donar);
   });
 };
-
+exports.getAllHospitals = function(req, res) {
+  Hospital.getAllHospitals(function(err, hospital) {
+    if (err) res.send(err);
+    res.json(hospital);
+  });
+};
+exports.getAllHospitalsBloodLevels = function(req, res) {
+  Hospital.getAllHospitalsBloodLevels(function(err, hospital) {
+    if (err) res.send(err);
+    res.json(hospital);
+  });
+};
 exports.update_a_hospital_by_id = function(req, res) {
   Hospital.updateById(req.params.id, new Hospital(req.body), function(err, donar) {
     if (err) res.send(err);

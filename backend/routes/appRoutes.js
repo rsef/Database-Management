@@ -20,6 +20,8 @@ module.exports = function(app) {
   .get(controller.list_all_users)
   app.route("/donars/")
   .get(controller.getAllDonars)
+  app.route("/hospitals/")
+  .get(controller.getAllHospitalsBloodLevels)
 
   app.route("/createaccount")
   .post(controller.create_account)
@@ -27,7 +29,7 @@ module.exports = function(app) {
 
   app.route("/delete/:id")
   .get(controller.delete_a_user);
-  
+
   app.route("/thankyou/:location")
   .get(controller.getHospitalByLocation);
 };

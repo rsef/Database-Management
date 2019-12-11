@@ -9,6 +9,7 @@ import ListAccounts from "./components/list-all-accounts.component";
 import MainPage from "./components/main-page.component";
 import ThankYouPage from "./components/thank-you-page.component";
 import DeleteUser from "./components/deleted-user.component";
+import Hospitals from "./components/hospitals.component";
 
 class App extends Component {
   render() {
@@ -36,6 +37,11 @@ class App extends Component {
                     Edit users
                   </Link>
                 </li>  
+                <li className="navbar-item">
+                  <Link to="/hospitals" className="nav-link">
+                    View Current Hospital Blood Levels
+                  </Link>
+                </li>  
               </ul>
             </div>
           </nav>
@@ -46,6 +52,7 @@ class App extends Component {
           <Route path="/users" component={ListAccounts} />
           <Route path="/thankyou" component={ThankYouPage}/>
           <Route path="/delete/:id" component={DeleteUser}/>
+          <Route path ="/hospitals" component={Hospitals}/>
         </div>
       </Router>
     );

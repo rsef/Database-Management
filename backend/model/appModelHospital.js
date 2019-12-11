@@ -57,17 +57,29 @@ Hospital.getHospitalByLocation = function (location, result) {
     };
 Hospital.getAllHospitals = function (result) {
     sql.query("Select * from hospitals", function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else{
+          console.log('users : ', res);  
 
-            if(err) {
-                console.log("error: ", err);
-                result(null, err);
-            }
-            else{
-              console.log('hospitals : ', res);  
+         result(null, res);
+        }
+    });   
+};
+Hospital.getAllHospitalsBloodLevels = function (result) {
+    sql.query("select hospitals.location, hospitals.hospital_name,blood_level.percentage_stored, blood_level.blood_type,blood_level.date_of_report from blood_level inner join hospitals ON blood_level.hospital_name=hospitals.hospital_name", function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else{
+          console.log('hospitals : ', res);  
 
-             result(null, res);
-            }
-        });   
+         result(null, res);
+        }
+    });   
 };
 Hospital.updateByHospitalname = function(hospital,hospital_name, result){
 sql.query("UPDATE hospitals SET hospital = ? WHERE hospital_name = ?", [hospital,hospital_name], function (err, res) {

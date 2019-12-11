@@ -6,6 +6,9 @@ const db = require("./model/db");
 
 const PORT = 4000;
 
+const url = process.env.url;
+
+
 //local mysql db connection
 var mydb = db;
 

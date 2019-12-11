@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+const url = 'http://localhost:4000';
+
 
 const Account = props => (
     <tr>
@@ -11,7 +13,6 @@ const Account = props => (
         <td className={props.user.information ? 'deleted' : ''}>{props.user.age}</td>
         <td className={props.user.information ? 'deleted' : ''}>{props.user.phone}</td>
         <td className={props.user.information ? 'deleted' : ''}>{props.user.sex}</td>
-        <td className={props.user.information ? 'deleted' : ''}>{props.user.diseases}</td>
         <td className={props.user.information ? 'deleted' : ''}>{props.user.location}</td>
         <td>
         <Link to={"/edit/"+props.user.id}>Update</Link>
@@ -33,7 +34,7 @@ export default class ListAccounts extends Component {
 
         componentDidMount() {
             console.log('is mounted')
-                axios.get('http://localhost:4000/users/')
+                axios.get(url +'/users/')
                     .then(response => {
                     this.setState({users: response.data});
                     })
@@ -44,7 +45,7 @@ export default class ListAccounts extends Component {
         componentDidUpdate(prevProps) {
             console.log(prevProps.data)
             if(prevProps.data !== this.props.data){ // break condition to stop rerendering
-                axios.get('http://localhost:4000/users/')
+                axios.get(url +'/users/')
                     .then(response => {
                     this.setState({users: response.data});
                     })
@@ -74,7 +75,6 @@ export default class ListAccounts extends Component {
                                 <th>Age</th>
                                 <th>Phone</th>
                                 <th>Sex</th>
-                                <th>Diseases</th>
                                 <th>Location</th>
                                 <th>Update User</th>
                                 <th>Delete User</th>

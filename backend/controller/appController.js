@@ -52,11 +52,33 @@ exports.update_a_user_by_id = function(req, res) {
   });
 };
 
+exports.create_donar = function(req, res) {
+  var new_donar = new Donar(req.body);
+  //handles null error
+  if (!new_donar.firstname|| !new_donar.lastname) {
+    res
+      .status(400)
+      .send({ error: true, message: "Please provide both a first name and a last" });
+  } else {
+    console.log('Creating a new user');
+    Donar.createDonar(new_donar, function(err, donar) {
+      if (err) res.send(err);
+      res.json(donar);
+    });
+  }
+};
+
 
 exports.delete_a_user = function(req, res) {
-  Donar.remove(req.params.id, function(err, user) {
+  User.remove(req.params.id, function(err, user) {
     if (err) res.send(err);
     res.json({ message: "User successfully deleted" });
+  });
+};
+exports.getAllDonars = function(req, res) {
+  Donar.getAllDonars(req.params.id, function(err, donar) {
+    if (err) res.send(err);
+    res.json(donar);
   });
 };
 exports.getDonarById = function(req, res) {

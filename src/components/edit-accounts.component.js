@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+const url = 'http://localhost:4000';
+
 export default class EditAccounts extends Component {
+    
 
     constructor(props) {
         super(props);
@@ -10,7 +13,6 @@ export default class EditAccounts extends Component {
         this.onChangeLastName = this.onChangeLastName.bind(this);
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
         this.onChangeAge = this.onChangeAge.bind(this);
         this.onChangePhone = this.onChangePhone.bind(this);
         this.onChangeSex = this.onChangeSex.bind(this);
@@ -23,7 +25,6 @@ export default class EditAccounts extends Component {
             lastname: '',            
             username: '',
             email: '',
-            pass: '',
             age: '',
             phone: '',
             sex: '',
@@ -34,7 +35,7 @@ export default class EditAccounts extends Component {
 
     componentDidMount() {
         console.log('did mount edit')
-        axios.get('http://localhost:4000/edit/'+this.props.match.params.id)
+        axios.get(url+'/edit/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
                     firstname: response.data[0].firstname,
@@ -116,14 +117,13 @@ onChangeLastName(e) {
             lastname: this.state.lastname,
             username: this.state.username,
             email: this.state.email,
-            pass: this.state.password,
             age: this.state.age,
             phone: this.state.phone,
             sex: this.state.sex,
             location: this.state.location
         };
         console.log(User)
-        axios.post('http://localhost:4000/update/'+this.props.match.params.id, User)
+        axios.post(url+'/update/'+this.props.match.params.id, User)
             .then(res => console.log(res.data));
         
         this.props.history.push('/');
@@ -200,7 +200,7 @@ onChangeLastName(e) {
                             <select value={this.state.value} onChange={this.onChangeLocation}>
                                 <option value="Manhattan">Manhattan</option>
                                 <option value="Bronx">Bronx</option>
-                                <option value="Brooklynt">Brooklyn</option>
+                                <option value="Brooklyn">Brooklyn</option>
                                 <option value="Queens">Queens</option>
                                 <option value="Staten Island">Staten Island</option>
                             </select>

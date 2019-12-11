@@ -18,12 +18,16 @@ module.exports = function(app) {
 
   app.route("/users/")
   .get(controller.list_all_users)
+  app.route("/donars/")
+  .get(controller.getAllDonars)
 
   app.route("/createaccount")
-  .post(controller.create_account);
+  .post(controller.create_account)
+  .post(controller.create_donar);
 
   app.route("/delete/:id")
   .get(controller.delete_a_user);
+  
   app.route("/thankyou/:location")
   .get(controller.getHospitalByLocation);
 };

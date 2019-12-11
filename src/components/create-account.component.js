@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import 'react-phone-number-input/style.css'
 import axios from 'axios';
 
+const url = 'http://localhost:4000';
+
 export default class CreateAccount extends Component {
     constructor(props) {
         super(props);
@@ -114,7 +116,7 @@ onChangeLastName(e) {
             location: this.state.location
         };
         console.log(newUser)
-        axios.post('http://localhost:4000/createaccount',newUser).then(res => console.log(res.data));
+        axios.post(url+'/createaccount',newUser).then(res => console.log(res.data));
         
         this.setState({
             firstname: '',

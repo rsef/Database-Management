@@ -1,4 +1,6 @@
-var User = require("../model/appModel.js");
+var User = require("../model/appModelUser.js");
+var Donar = require("../model/appModelDonar.js");
+var Hospital = require("../model/appModelHospital.js");
 
 exports.list_all_users = function(req, res) {
   User.getAllUsers(function(err, user) {
@@ -30,6 +32,12 @@ exports.getUserByUsername = function(req, res) {
     res.json(user);
   });
 };
+exports.getUserById = function(req, res) {
+  User.getUserById(req.params.id, function(err, user) {
+    if (err) res.send(err);
+    res.json(user);
+  });
+};
 
 exports.update_a_user = function(req, res) {
   User.updateByUsername(req.params.username, new User(req.body), function(err, user) {
@@ -37,10 +45,67 @@ exports.update_a_user = function(req, res) {
     res.json(user);
   });
 };
+exports.update_a_user_by_id = function(req, res) {
+  User.updateById(req.params.id, new User(req.body), function(err, user) {
+    if (err) res.send(err);
+    res.json(user);
+  });
+};
+
 
 exports.delete_a_user = function(req, res) {
-  User.remove(req.params.username, function(err, user) {
+  Donar.remove(req.params.id, function(err, user) {
     if (err) res.send(err);
     res.json({ message: "User successfully deleted" });
+  });
+};
+exports.getDonarById = function(req, res) {
+  Donar.getDonarById(req.params.id, function(err, donar) {
+    if (err) res.send(err);
+    res.json(donar);
+  });
+};
+exports.delete_a_donar = function(req, res) {
+  Donar.remove(req.params.id, function(err, donar) {
+    if (err) res.send(err);
+    res.json({ message: "Donar successfully deleted" });
+  });
+};
+exports.update_a_donar_by_id = function(req, res) {
+  Donar.updateById(req.params.id, new Donar(req.body), function(err, donar) {
+    if (err) res.send(err);
+    res.json(donar);
+  });
+};
+
+exports.update_a_hospital_by_id = function(req, res) {
+  Hospital.updateById(req.params.id, new Hospital(req.body), function(err, donar) {
+    if (err) res.send(err);
+    res.json(donar);
+  });
+};
+exports.getHospitalByName = function(req, res) {
+  Hospital.getHospitalByHospitalname(req.params.hospital_name, function(err, user) {
+    if (err) res.send(err);
+    res.json(user);
+  });
+};
+exports.getHospitalById = function(req, res) {
+  Hospital.getHospitalById(req.params.id, function(err, user) {
+    if (err) res.send(err);
+    res.json(user);
+  });
+};
+exports.getHospitalByLocation = function(req, res) {
+  Hospital.getHospitalByLocation(req.params.location, function(err, user) {
+    if (err) res.send(err);
+    res.json(user);
+  });
+};
+
+exports.update_a_Hospital = function(req, res) {
+  Hospital.updateByHospitalname(req.params.hospital_name, new Hospital(req.body), function(err, user) {
+    if (err) res.send(err);
+    res.json(user);
   });
 };

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import 'react-phone-number-input/style.css'
 import axios from 'axios';
 
-export default class CreateAccount extends Component {
+export default class EditAccounts extends Component {
+
     constructor(props) {
         super(props);
 
@@ -32,6 +32,25 @@ export default class CreateAccount extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log('did mount edit')
+        axios.get('http://localhost:4000/edit/'+this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    firstname: response.data[0].firstname,
+                    lastname: response.data[0].lastname,
+                    email: response.data[0].email,
+                    age: response.data[0].age,
+                    phone: response.data[0].phone,
+                    sex: response.data[0].sex,
+                    location: response.data[0].location
+                })   
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+    }
 //Update the current state of object aspect
 onChangeFirstName(e) {
     this.setState({
@@ -88,24 +107,14 @@ onChangeLastName(e) {
             location: e.target.value
         });
     }    
-    onSubmit(e) { // Reset object after inputting data
-        console.log(`Form submitted:`);
-        console.log(`Firstname: ${this.state.firstname}`);
-        console.log(`Lastname: ${this.state.lastname}`);                
-        console.log(`Username: ${this.state.username}`);
-        console.log(`Email: ${this.state.email}`);
-        console.log(`Password: ${this.state.pass}`);
-        console.log(`Age: ${this.state.age}`);
-        console.log(`Phone: ${this.state.phone}`);
-        console.log(`Sex: ${this.state.sex}`);
-        console.log(`Diseases: ${this.state.diseases}`);
-        console.log(`Diseases: ${this.state.location}`);
 
-        
-        const newUser = {
+
+    onSubmit(e) {
+        e.preventDefault();
+        const User = {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
-            username: this.state.firstname.concat("." + this.state.lastname),
+            username: this.state.username,
             email: this.state.email,
             pass: this.state.password,
             age: this.state.age,
@@ -113,30 +122,23 @@ onChangeLastName(e) {
             sex: this.state.sex,
             location: this.state.location
         };
-        console.log(newUser)
-        axios.post('http://localhost:4000/createaccount',newUser).then(res => console.log(res.data));
+        console.log(User)
+        axios.post('http://localhost:4000/update/'+this.props.match.params.id, User)
+            .then(res => console.log(res.data));
         
-        this.setState({
-            firstname: '',
-            lastname: '',            
-            username: '',
-            email: '',
-            pass: '',
-            age: '',
-            sex: '',
-            diseases: '',
-            location: ''            
-        })
-        this.props.history.push('/thankyou/'+this.state.location);
+        this.props.history.push('/');
     }
+
     render() {
         return (
-            <div style={{marginTop: 10}}>
-                <h3>Sign up here</h3>
+            <div>
+                <h3 align="center">Update User Information</h3>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group"> 
+                    <div 
+                    className="form-group"> 
                         <label>First Name: </label>
-                        <input  type="text"
+                        <input 
+                                type="text"
                                 className="form-control"
                                 value={this.state.firstname}
                                 onChange={this.onChangeFirstName}
@@ -160,15 +162,6 @@ onChangeLastName(e) {
                                 onChange={this.onChangeEmail}
                                 />
                     </div>
-                    <div className="form-group">
-                        <label>Phone: </label>
-                        <input 
-                            type="text" 
-                            className="form-control"
-                            value={this.state.phone}
-                            onChange={this.onChangePhone}
-                            />
-                    </div>                    
                     <div className="form-group">
                         <div className="form-check form-check-inline">
                             <input  className="form-check-input" 
@@ -207,15 +200,33 @@ onChangeLastName(e) {
                             <select value={this.state.value} onChange={this.onChangeLocation}>
                                 <option value="Manhattan">Manhattan</option>
                                 <option value="Bronx">Bronx</option>
-                                <option value="Brooklyn">Brooklyn</option>
+                                <option value="Brooklynt">Brooklyn</option>
                                 <option value="Queens">Queens</option>
                                 <option value="Staten Island">Staten Island</option>
                             </select>
                         </label>
                     </div>   
+                    <div className="form-group">
+                        <label>Phone: </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.phone}
+                                onChange={this.onChangePhone}
+                                />
+                    </div>
+                    <div className="form-group">
+                        <label>Diseases: </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.diseases}
+                                onChange={this.onChangeDiseases}
+                                />
+                    </div>
                                      
                     <div className="form-group">
-                        <input type="submit" value="Sign up" className="btn btn-primary" />
+                        <input type="submit" value="Update User" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

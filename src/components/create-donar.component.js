@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const url = 'http://localhost:4000';
 
-export default class EditAccounts extends Component {
+export default class CreateDonar extends Component {
     
 
     constructor(props) {
@@ -27,18 +27,18 @@ export default class EditAccounts extends Component {
             lastname: '',            
             username: '',
             email: '',
-            age: '',
             phone: '',
+            age: '',            
             sex: '',
             diseases: '',
             location: '',
-            weight: '',
-            bloodtype: ''
+            blood_type: '',
+            weight: ''
         }
     }
 
     componentDidMount() {
-        console.log('did mount edit')
+        console.log('did mount donars')
         axios.get(url+'/edit/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
@@ -49,9 +49,9 @@ export default class EditAccounts extends Component {
                     phone: response.data[0].phone,
                     sex: response.data[0].sex,
                     location: response.data[0].location,
-                    weight: '',
-                    diseases: '',
-                    bloodtype: ''
+                    diseases: response.data[0].diseases,
+                    bloodtype: response.data[0].bloodtype,
+                    weight: response.data[0].weight
                 })   
             })
             .catch(function (error) {
@@ -124,42 +124,43 @@ onChangeLastName(e) {
         this.setState({
             bloodtype: e.target.value
         });
-    }      
+    }          
+
 
     onSubmit(e) {
         e.preventDefault();
         const User = {
             firstname: this.state.firstname.toUpperCase(),
             lastname: this.state.lastname.toUpperCase(),
-            username: this.state.firstname.concat('.'+this.state.lastname),
+            username: this.state.firstname.concat("." + this.state.lastname).toUpperCase(),
             email: this.state.email.toUpperCase(),
             age: this.state.age,
             phone: this.state.phone,
             sex: this.state.sex,
-            location: this.state.location.toUpperCase()
+            location: this.state.location.toUpperCase(),
+            diseases: this.state.diseases.toUpperCase(),
+            blood_type: this.state.bloodtype.toUpperCase(),
         };
         const Donar = {
-            userID: this.props.match.params.id,
             firstname: this.state.firstname.toUpperCase(),
             lastname: this.state.lastname.toUpperCase(),
             email: this.state.email.toUpperCase(),
             diseases: this.state.diseases.toUpperCase(),
             blood_type: this.state.bloodtype.toUpperCase(),
-            weight: this.state.weight,
-            userID: this.props.match.params.id
+            weight: this.state.weight        
         };
-        console.log(User)
+        console.log(User.Donar)
         axios.post(url+'/update/'+this.props.match.params.id, User)
             .then(res => console.log(res.data));
-         axios.post(url+'/createDonar/'+this.props.match.params.id, Donar)
-            .then(res => console.log(Donar,"added this"));
+        axios.post(url+'/updateDonar/'+this.props.match.params.id, Donar)
+            .then(res => console.log(res.data));
         this.props.history.push('/');
     }
 
     render() {
         return (
             <div>
-                <h3 align="center">Update User Information/Register Donar</h3>
+                <h3 align="center">Update Donar</h3>
                 <form onSubmit={this.onSubmit}>
                     <div 
                     className="form-group"> 
@@ -254,7 +255,7 @@ onChangeLastName(e) {
                     <div className="form-group">
                         <label>Weight: </label>
                         <input 
-                                type="number" 
+                                type="text" 
                                 className="form-control"
                                 value={this.state.weight}
                                 onChange={this.onChangeWeight}
@@ -271,7 +272,7 @@ onChangeLastName(e) {
                     </div>
                                      
                     <div className="form-group">
-                        <input type="submit" value="Update User and Verify Donar information" className="btn btn-primary" />
+                        <input type="submit" value="Update Donar" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

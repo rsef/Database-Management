@@ -8,6 +8,12 @@ module.exports = function(app) {
   .get(controller.getUserById)
   .post(controller.update_a_user_by_id);
 
+  app.route("/updateDonar/:id")
+  .post(controller.update_a_donar_by_id)
+  app.route("/createDonar/:id")
+  .post(controller.create_donar)
+
+
   app.route("/login/:username")
   .get(controller.getUserByUsername)
   .post(controller.getUserByUsername);
@@ -18,10 +24,22 @@ module.exports = function(app) {
 
   app.route("/users/")
   .get(controller.list_all_users)
-  app.route("/donars/")
+
+  app.route("/donars/:id")
   .get(controller.getAllDonars)
+  app.route("/donars/:bloodtype")
+  .get(controller.getAllDonars)
+  app.route("/email/:location/:bloodtype")
+  .get(controller.getAllDonarsBoroBlood)
+  app.route("/contact/:location")
+  .get(controller.getDonarByBloodType)
+  app.route("/contact/:location")
+  .get(controller.getAllDonarsBoroBlood)
+
   app.route("/hospitals/")
   .get(controller.getAllHospitalsBloodLevels)
+  app.route("/hospitals/:location")
+  .get(controller.filterHospitalsByBorough)
 
   app.route("/createaccount")
   .post(controller.create_account)
@@ -31,5 +49,5 @@ module.exports = function(app) {
   .get(controller.delete_a_user);
 
   app.route("/thankyou/:location")
-  .get(controller.getHospitalByLocation);
+  .get(controller.getAllHospitalsThankyou);
 };

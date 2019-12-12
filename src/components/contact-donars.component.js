@@ -5,38 +5,38 @@ import axios from 'axios';
 const url = 'http://localhost:4000';
 
 
-const Account = props => (
+const Donar = props => (
     <tr>
-        <td>{props.user.firstname}</td>
-        <td>{props.user.lastname}</td>
-        <td>{props.user.email}</td>
-        <td>{props.user.age}</td>
-        <td>{props.user.phone}</td>
-        <td>{props.user.sex}</td>
-        <td>{props.user.location}</td>
-        <td>
-        <Link to={"/edit/"+props.user.userID}>Create/Update Donar</Link>
-        </td>
-        <td>
-        <Link to={"/delete/"+props.user.userID}>Delete</Link>
-        </td>
+        <td>{props.donar.firstname}</td>
+        <td>{props.donar.lastname}</td>
+        <td>{props.donar.email}</td>
+        <td>{props.donar.phone}</td>
+        <td>{props.donar.location}</td>
+        <td>{props.donar.bloodtype}</td>
     </tr>
     
 )
-export default class ListAccounts extends Component {
+export default class ListDonars extends Component {
     _ismounted = false;
 
     constructor(props) {
         super(props);
-        this.state = {users: []};
+        this.state = {donars: []};
     }
     
 
         componentDidMount() {
-            console.log('is mounted')
-                axios.get(url +'/users/')
+            console.log('is mounted contacts',this.props.match.params)
+                axios.get(url +'/email/'+this.props.match.params.location+"/"+this.props.match.params.blood_type)
                     .then(response => {
-                    this.setState({users: response.data});
+                    this.setState({donars : response.data});
+                    })
+                    .catch(function (error) {
+                    console.log(error);
+                    })
+                    axios.get(url +'/email/'+this.props.match.params.location+"/"+this.props.match.params.blood_type)
+                    .then(response => {
+                    this.setState({donars : response.data});
                     })
                     .catch(function (error) {
                     console.log(error);
@@ -45,19 +45,19 @@ export default class ListAccounts extends Component {
         componentDidUpdate(prevProps) {
             console.log(prevProps.data)
             if(prevProps.data !== this.props.data){ // break condition to stop rerendering
-                axios.get(url +'/users/')
+                axios.get(url +'/email/'+this.props.match.params.location+"/"+this.props.match.params.blood_type)
                     .then(response => {
-                    this.setState({users: response.data});
+                    this.setState({donars: response.data});
                     })
                 .catch(function (error) {
                     console.log('prob',error);
                 })   
             }
         }
-        userList() {
-            return this.state.users.map(function(currentUser, i) {
+        donarList() {
+            return this.state.donars.map(function(currentDonar, i) {
               console.log('key',i)
-             return <Account user={currentUser} key={i} />;
+             return <Donar donar={currentDonar} key={i} />;
                 
             });
         }
@@ -65,23 +65,21 @@ export default class ListAccounts extends Component {
         render() {
             return (
                 <div>
-                    <h3>Signup List</h3>
+                    <h3>Contact Information for Users With Matching Bloodtypes</h3>
                     <table className="table table-striped" style={{ marginTop: 20 }}>
                         <thead>
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
-                                <th>Age</th>
                                 <th>Phone</th>
-                                <th>Sex</th>
                                 <th>Location</th>
-                                <th>Create Donar</th>
-                                <th>Delete User</th>
+                                <th>Blood Type</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                        { this.userList() }
+                        { this.donarList() }
                          </tbody>
                     </table>
                 </div>

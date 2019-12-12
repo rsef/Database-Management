@@ -26,8 +26,8 @@ User.createUser = function (newUser, result) {
                 }
             });           
 };
-User.getUserById = function (userId, result) {
-    sql.query("Select * from users where id = ? ", userId, function (err, res) {             
+User.getUserById = function (uId, result) {
+    sql.query("Select * from users where userID = ? ", uId, function (err, res) {             
             if(err) {
                 console.log("error: ", err);
                 result(err, null);
@@ -38,8 +38,9 @@ User.getUserById = function (userId, result) {
             }
         });   
 };
+
 User.getAllUsers = function (result) {
-        sql.query("Select * from users", function (err, res) {
+        sql.query("Select * from users order by firstname", function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);
@@ -64,7 +65,7 @@ User.updateByUsername = function(user,username, result){
             }); 
 };
 User.updateById = function(id,user, result){
-    sql.query("UPDATE users SET ? WHERE id = ?", [user,id], function (err, res) {
+    sql.query("UPDATE users SET ? WHERE userID = ?", [user,id], function (err, res) {
             if(err) {
                 console.log("error: ", err);
                   result(null, err);
@@ -75,7 +76,7 @@ User.updateById = function(id,user, result){
               }); 
   };
 User.remove = function(id, result){
-     sql.query("DELETE FROM users WHERE id = ?", id, function (err, res) {
+     sql.query("DELETE FROM users WHERE userID = ?", id, function (err, res) {
 
                 if(err) {
                     console.log("error: ", err);

@@ -105,15 +105,15 @@ onChangeLastName(e) {
 
         
         const newUser = {
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
+            firstname: this.state.firstname.toUpperCase(),
+            lastname: this.state.lastname.toUpperCase(),
             username: this.state.firstname.concat("." + this.state.lastname),
-            email: this.state.email,
-            pass: this.state.password,
+            email: this.state.email.toUpperCase(),
+            pass: this.state.password.toUpperCase(),
             age: this.state.age,
             phone: this.state.phone,
-            sex: this.state.sex,
-            location: this.state.location
+            sex: this.state.sex.toUpperCase(),
+            location: this.state.location.toUpperCase()
         };
         console.log(newUser)
         axios.post(url+'/createaccount',newUser).then(res => console.log(res.data));
@@ -129,7 +129,7 @@ onChangeLastName(e) {
             diseases: '',
             location: ''            
         })
-        this.props.history.push('/thankyou/'+this.state.location);
+        this.props.history.push('/'+this.state.location);
     }
     render() {
         return (

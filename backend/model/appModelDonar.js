@@ -75,7 +75,7 @@ Donar.getAllDonars = function (result) {
         });   
 };
 Donar.getAllDonarsBoroBlood = function (donarBoro,donarBlood,result) {
-    sql.query("Select donar_info.firstname,donar_info.lastname,donar_info.email,donar_info.bloodtype,users.location from donar_info inner join users ON users.userID = donar_info.userID where location = ? and bloodtype = ? order by donar_info.firstname,donar_info.lastname",[donarBoro,donarBlood], function (err, res) {
+    sql.query("Select donar_info.firstname,donar_info.lastname,donar_info.email,users.phone,donar_info.bloodtype,users.location from donar_info inner join users ON users.userID = donar_info.userID where location = ? and bloodtype = ? order by donar_info.firstname,donar_info.lastname",[donarBoro,donarBlood], function (err, res) {
 
             if(err) {
                 console.log("error: ", err);

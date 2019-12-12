@@ -10,6 +10,7 @@ const Donar = props => (
         <td>{props.donar.firstname}</td>
         <td>{props.donar.lastname}</td>
         <td>{props.donar.email}</td>
+        <td>{props.donar.phone}</td>
         <td>{props.donar.location}</td>
         <td>{props.donar.bloodtype}</td>
     </tr>
@@ -64,13 +65,14 @@ export default class ListDonars extends Component {
         render() {
             return (
                 <div>
-                    <h3>Users with matching bloodtypes</h3>
+                    <h3>Contact Information for Users With Matching Bloodtypes</h3>
                     <table className="table table-striped" style={{ marginTop: 20 }}>
                         <thead>
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
+                                <th>Phone</th>
                                 <th>Location</th>
                                 <th>Blood Type</th>
 

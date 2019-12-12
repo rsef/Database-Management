@@ -159,7 +159,7 @@ onChangeLastName(e) {
     render() {
         return (
             <div>
-                <h3 align="center">Update User Information</h3>
+                <h3 align="center">Update User Information/Register Donar</h3>
                 <form onSubmit={this.onSubmit}>
                     <div 
                     className="form-group"> 
@@ -271,7 +271,7 @@ onChangeLastName(e) {
                     </div>
                                      
                     <div className="form-group">
-                        <input type="submit" value="Update User with Donar information" className="btn btn-primary" />
+                        <input type="submit" value="Update User and Verify Donar information" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

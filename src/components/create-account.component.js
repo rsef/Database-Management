@@ -129,7 +129,7 @@ onChangeLastName(e) {
             diseases: '',
             location: ''            
         })
-        this.props.history.push('/thankyou/'+this.state.location);
+        this.props.history.push('/'+this.state.location);
     }
     render() {
         return (

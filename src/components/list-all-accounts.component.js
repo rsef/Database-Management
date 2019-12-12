@@ -15,7 +15,7 @@ const Account = props => (
         <td>{props.user.sex}</td>
         <td>{props.user.location}</td>
         <td>
-        <Link to={"/edit/"+props.user.userID}>Update</Link>
+        <Link to={"/edit/"+props.user.userID}>Create/Update Donar</Link>
         </td>
         <td>
         <Link to={"/delete/"+props.user.userID}>Delete</Link>
@@ -65,7 +65,7 @@ export default class ListAccounts extends Component {
         render() {
             return (
                 <div>
-                    <h3>User List</h3>
+                    <h3>Signup List</h3>
                     <table className="table table-striped" style={{ marginTop: 20 }}>
                         <thead>
                             <tr>
@@ -76,7 +76,7 @@ export default class ListAccounts extends Component {
                                 <th>Phone</th>
                                 <th>Sex</th>
                                 <th>Location</th>
-                                <th>Update User</th>
+                                <th>Create Donar</th>
                                 <th>Delete User</th>
                             </tr>
                         </thead>

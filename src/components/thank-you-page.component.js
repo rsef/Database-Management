@@ -1,22 +1,39 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+const url = 'http://localhost:4000';
+
+const Thankyou = props => (
+    <tr>
+        <td>{props.thankyou.firstname}</td>
+        <td>{props.thankyou.lastname}</td>
+        <td>{props.thankyou.hospital_name}</td>
+        <td>{props.thankyou.location}</td>
+        <td>{props.thankyou.date_of_report}</td>
+    </tr>
+    
+)
 export default class ThankYouPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            firstname: '',
+            lastname: '',
             location: '',
-            hospital_name: '',            
+            hospital_name: '',     
+            date_of_report: '',       
         }
     }
     componentDidMount() {
         console.log('did mount thankyou')
-        axios.get('http://localhost:4000/thankyou/'+this.props.match.params.location)
+        axios.get(url+'thankyou/'+this.props.match.params.location)
             .then(response => {
                 console.log(response,"test");  
                 this.setState({
-                    location: response.data.location,
-                    hospital_name: response.data.hospital_name,
+                    location: response.data[0].location,
+                    hospital_name: response.data[0].hospital_name,
+                    firstname: response.data[0].firstname,
+                    
                 })   
             })
             .catch(function (error) {
@@ -28,12 +45,12 @@ export default class ThankYouPage extends Component {
         return (
             <div 
             className="form-group"> 
-                <label value= {this.state.location}
+                <label defaultValue= {this.state.location}
                     >Thank you: </label>
                 <input 
                         type="text"
                         className="form-control"
-                        value={this.state.location || "estset"}
+                        defaultValue={this.state.location || "estset"}
                         />
             </div>
         )

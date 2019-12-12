@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import 'react-phone-number-input/style.css'
 import axios from 'axios';
 
 const url = 'http://localhost:4000';
 
-export default class CreateAccount extends Component {
+export default class CreateDonar extends Component {
+    
+
     constructor(props) {
         super(props);
 
@@ -12,12 +13,13 @@ export default class CreateAccount extends Component {
         this.onChangeLastName = this.onChangeLastName.bind(this);
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
         this.onChangeAge = this.onChangeAge.bind(this);
         this.onChangePhone = this.onChangePhone.bind(this);
         this.onChangeSex = this.onChangeSex.bind(this);
         this.onChangeDiseases = this.onChangeDiseases.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeBloodType = this.onChangeBloodType.bind(this);
+        this.onChangeWeight = this.onChangeWeight.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -25,15 +27,38 @@ export default class CreateAccount extends Component {
             lastname: '',            
             username: '',
             email: '',
-            pass: '',
-            age: '',
             phone: '',
+            age: '',            
             sex: '',
             diseases: '',
-            location: ''
+            location: '',
+            blood_type: '',
+            weight: ''
         }
     }
 
+    componentDidMount() {
+        console.log('did mount donars')
+        axios.get(url+'/edit/'+this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    firstname: response.data[0].firstname,
+                    lastname: response.data[0].lastname,
+                    email: response.data[0].email,
+                    age: response.data[0].age,
+                    phone: response.data[0].phone,
+                    sex: response.data[0].sex,
+                    location: response.data[0].location,
+                    diseases: response.data[0].diseases,
+                    bloodtype: response.data[0].bloodtype,
+                    weight: response.data[0].weight
+                })   
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+    }
 //Update the current state of object aspect
 onChangeFirstName(e) {
     this.setState({
@@ -85,60 +110,63 @@ onChangeLastName(e) {
             diseases: e.target.value
         });
     }
+    onChangeWeight(e) {
+        this.setState({
+            weight: e.target.value
+        });
+    }  
     onChangeLocation(e) {
         this.setState({
             location: e.target.value
         });
-    }    
-    onSubmit(e) { // Reset object after inputting data
-        console.log(`Form submitted:`);
-        console.log(`Firstname: ${this.state.firstname}`);
-        console.log(`Lastname: ${this.state.lastname}`);                
-        console.log(`Username: ${this.state.username}`);
-        console.log(`Email: ${this.state.email}`);
-        console.log(`Password: ${this.state.pass}`);
-        console.log(`Age: ${this.state.age}`);
-        console.log(`Phone: ${this.state.phone}`);
-        console.log(`Sex: ${this.state.sex}`);
-        console.log(`Diseases: ${this.state.diseases}`);
-        console.log(`Diseases: ${this.state.location}`);
+    }  
+    onChangeBloodType(e) {
+        this.setState({
+            bloodtype: e.target.value
+        });
+    }          
 
-        
-        const newUser = {
+
+    onSubmit(e) {
+        e.preventDefault();
+        const User = {
             firstname: this.state.firstname.toUpperCase(),
             lastname: this.state.lastname.toUpperCase(),
-            username: this.state.firstname.concat("." + this.state.lastname),
+            username: this.state.firstname.concat("." + this.state.lastname).toUpperCase(),
             email: this.state.email.toUpperCase(),
-            pass: this.state.password.toUpperCase(),
             age: this.state.age,
             phone: this.state.phone,
-            sex: this.state.sex.toUpperCase(),
-            location: this.state.location.toUpperCase()
+            sex: this.state.sex,
+            location: this.state.location.toUpperCase(),
+            diseases: this.state.diseases.toUpperCase(),
+            blood_type: this.state.bloodtype.toUpperCase(),
         };
-        console.log(newUser)
-        axios.post(url+'/createaccount',newUser).then(res => console.log(res.data));
-        
-        this.setState({
-            firstname: '',
-            lastname: '',            
-            username: '',
-            email: '',
-            pass: '',
-            age: '',
-            sex: '',
-            diseases: '',
-            location: ''            
-        })
-        this.props.history.push('/thankyou/'+this.state.location);
+        const Donar = {
+            firstname: this.state.firstname.toUpperCase(),
+            lastname: this.state.lastname.toUpperCase(),
+            email: this.state.email.toUpperCase(),
+            diseases: this.state.diseases.toUpperCase(),
+            blood_type: this.state.bloodtype.toUpperCase(),
+            weight: this.state.weight        
+        };
+        console.log(User.Donar)
+        axios.post(url+'/update/'+this.props.match.params.id, User)
+            .then(res => console.log(res.data));
+        axios.post(url+'/updateDonar/'+this.props.match.params.id, Donar)
+            .then(res => console.log(res.data));
+        this.props.history.push('/');
     }
+
     render() {
         return (
-            <div style={{marginTop: 10}}>
-                <h3>Sign up here</h3>
+            <div>
+                <h3 align="center">Update Donar</h3>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group"> 
+                    <div 
+                    className="form-group"> 
                         <label>First Name: </label>
-                        <input  type="text"
+                        <input 
+                                type="text"
                                 className="form-control"
                                 value={this.state.firstname}
                                 onChange={this.onChangeFirstName}
@@ -162,15 +190,6 @@ onChangeLastName(e) {
                                 onChange={this.onChangeEmail}
                                 />
                     </div>
-                    <div className="form-group">
-                        <label>Phone: </label>
-                        <input 
-                            type="text" 
-                            className="form-control"
-                            value={this.state.phone}
-                            onChange={this.onChangePhone}
-                            />
-                    </div>                    
                     <div className="form-group">
                         <div className="form-check form-check-inline">
                             <input  className="form-check-input" 
@@ -215,9 +234,45 @@ onChangeLastName(e) {
                             </select>
                         </label>
                     </div>   
+                    <div className="form-group">
+                        <label>Phone: </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.phone}
+                                onChange={this.onChangePhone}
+                                />
+                    </div>
+                    <div className="form-group">
+                        <label>Medical Condition(s): </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.diseases}
+                                onChange={this.onChangeDiseases}
+                                />
+                    </div>
+                    <div className="form-group">
+                        <label>Weight: </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.weight}
+                                onChange={this.onChangeWeight}
+                                />
+                    </div>
+                    <div className="form-group">
+                        <label>Blood Type: </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.bloodtype}
+                                onChange={this.onChangeBloodType}
+                                />
+                    </div>
                                      
                     <div className="form-group">
-                        <input type="submit" value="Sign up" className="btn btn-primary" />
+                        <input type="submit" value="Update Donar" className="btn btn-primary" />
                     </div>
                 </form>
             </div>

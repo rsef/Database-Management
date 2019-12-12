@@ -76,7 +76,19 @@ exports.delete_a_user = function(req, res) {
   });
 };
 exports.getAllDonars = function(req, res) {
-  Donar.getAllDonars(req.params.id, function(err, donar) {
+  Donar.getAllInfo(req.params.id, function(err, donar) {
+    if (err) res.send(err);
+    res.json(donar);
+  });
+};
+exports.getAllDonarsBoroBlood = function(req, res) {
+  Donar.getAllDonarsBoroBlood(req.params.location,req.params.bloodtype, function(err, donar) {
+    if (err) res.send(err);
+    res.json(donar);
+  });
+};
+exports.getDonarByBloodType = function(req, res) {
+  Donar.getDonarByBloodType(req.params.bloodtype, function(err, donar) {
     if (err) res.send(err);
     res.json(donar);
   });
@@ -111,34 +123,46 @@ exports.getAllHospitalsBloodLevels = function(req, res) {
     res.json(hospital);
   });
 };
+exports.getAllHospitalsThankyou = function(req, res) {
+  Hospital.getHospitalThankYou(req.params.location,function(err, hospital) {
+    if (err) res.send(err);
+    res.json(hospital);
+  });
+};
+exports.filterHospitalsByBorough = function(req, res) {
+  Hospital.filterBloodByBoro(req.params.location,function(err, hospital) {
+    if (err) res.send(err);
+    res.json(hospital);
+  });
+};
 exports.update_a_hospital_by_id = function(req, res) {
   Hospital.updateById(req.params.id, new Hospital(req.body), function(err, donar) {
     if (err) res.send(err);
-    res.json(donar);
+    res.json(hospital);
   });
 };
 exports.getHospitalByName = function(req, res) {
   Hospital.getHospitalByHospitalname(req.params.hospital_name, function(err, user) {
     if (err) res.send(err);
-    res.json(user);
+    res.json(hospital);
   });
 };
 exports.getHospitalById = function(req, res) {
   Hospital.getHospitalById(req.params.id, function(err, user) {
     if (err) res.send(err);
-    res.json(user);
+    res.json(hospital);
   });
 };
 exports.getHospitalByLocation = function(req, res) {
   Hospital.getHospitalByLocation(req.params.location, function(err, user) {
     if (err) res.send(err);
-    res.json(user);
+    res.json(hospital);
   });
 };
 
 exports.update_a_Hospital = function(req, res) {
   Hospital.updateByHospitalname(req.params.hospital_name, new Hospital(req.body), function(err, user) {
     if (err) res.send(err);
-    res.json(user);
+    res.json(hospital);
   });
 };

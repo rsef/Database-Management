@@ -5,65 +5,55 @@ import axios from 'axios';
 const url = 'http://localhost:4000';
 
 
-const Hospital = props => (
+const HospitalFiltered = props => (
     <tr>
-        <td>{props.hospital.location}</td>
-        <td>{props.hospital.hospital_name}</td>
-        <td>{props.hospital.blood_type}</td>
-        <td>{props.hospital.percentage_stored}</td>
-        <td>{props.hospital.date_of_report}</td>
+        <td>{props.hospitalfiltered.location}</td>
+        <td>{props.hospitalfiltered.hospital_name}</td>
+        <td>{props.hospitalfiltered.blood_type}</td>
+        <td>{props.hospitalfiltered.percentage_stored}</td>
+        <td>{props.hospitalfiltered.date_of_report}</td>
         <td>
-        <Link to={"/contact/"+props.hospital.location}>See More Info</Link>
+        <Link to={"/email/"+props.hospitalfiltered.location+"/"+props.hospitalfiltered.blood_type+"/"}>Find Elligible Donars</Link>
         </td>
     </tr>
     
+    
 )
-export default class Hospitals extends Component {
+export default class HospitalsFiltered extends Component {
     _ismounted = false;
 
     constructor(props) {
         super(props);
-        this.state = {hospitals: []};
+        this.state = {filteredhospitals: []};
     }
     
 
         componentDidMount() {
-            console.log('is mounted hospitals')
-                axios.get(url +'/hospitals/')
+            console.log('is mounted hospitals f')
+                axios.get(url +'/hospitals/'+this.props.match.params.location)
                     .then(response => {
-                    this.setState({hospitals: response.data});
+                    this.setState({filteredhospitals: response.data});
                     })
                     .catch(function (error) {
                     console.log(error);
                     })
         }
         componentDidUpdate(prevProps) {
-            console.log(prevProps.data)
+            console.log(prevProps.data,"tst")
             if(prevProps.data !== this.props.data){ // break condition to stop rerendering
-                axios.get(url +'/hospitals/')
+                axios.get(url +'/hospitals/'+this.props.match.params.location)
                     .then(response => {
-                    this.setState({hospitals: response.data});
+                    this.setState({filteredhospitals: response.data});
                     })
                 .catch(function (error) {
                     console.log('prob',error);
                 })   
             }
         }
-        onSubmit(e) {
-            e.preventDefault();
-            const hospitals = {
-                location: this.state.location,
-                hospital_name: this.hospital_name,
-                blood_type: this.state.blood_type,
-                percentage_stored: this.percentage_stored,
-                date_of_report: this.date_of_report
-            };
-        }
-        hospitalList() {
-            return this.state.hospitals.map(function(currentHospital, i) {
+        fhospitalList() {
+            return this.state.filteredhospitals.map(function(currentFHospital, i) {
               console.log('key',i)
-             return <Hospital hospital={currentHospital} key={i} />;
-                
+             return <HospitalFiltered hospitalfiltered={currentFHospital} key={i} />;
             });
         }
         onChangeLocation(e) {
@@ -75,12 +65,11 @@ export default class Hospitals extends Component {
             this.setState({
                 blood_type: e.target.value
             });
-        }        
-    
+        }
         render() {
             return (
                 <div>
-                    <h3>Hospital Status</h3>                          
+                    <h3>Hospital Status</h3>                             
                     <table className="table table-striped" style={{ marginTop: 20 }}>
                         <thead>
                             <tr>
@@ -93,7 +82,7 @@ export default class Hospitals extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                        { this.hospitalList() }
+                        { this.fhospitalList() }
                          </tbody>
                     </table>
                 </div>

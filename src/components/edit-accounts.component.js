@@ -18,6 +18,8 @@ export default class EditAccounts extends Component {
         this.onChangeSex = this.onChangeSex.bind(this);
         this.onChangeDiseases = this.onChangeDiseases.bind(this);
         this.onChangeLocation = this.onChangeLocation.bind(this);
+        this.onChangeBloodType = this.onChangeBloodType.bind(this);
+        this.onChangeWeight = this.onChangeWeight.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -29,7 +31,9 @@ export default class EditAccounts extends Component {
             phone: '',
             sex: '',
             diseases: '',
-            location: ''
+            location: '',
+            weight: '',
+            bloodtype: ''
         }
     }
 
@@ -44,7 +48,10 @@ export default class EditAccounts extends Component {
                     age: response.data[0].age,
                     phone: response.data[0].phone,
                     sex: response.data[0].sex,
-                    location: response.data[0].location
+                    location: response.data[0].location,
+                    weight: '',
+                    diseases: '',
+                    bloodtype: ''
                 })   
             })
             .catch(function (error) {
@@ -103,29 +110,49 @@ onChangeLastName(e) {
             diseases: e.target.value
         });
     }
+    onChangeWeight(e) {
+        this.setState({
+            weight: e.target.value
+        });
+    }  
     onChangeLocation(e) {
         this.setState({
             location: e.target.value
         });
-    }    
-
+    }  
+    onChangeBloodType(e) {
+        this.setState({
+            bloodtype: e.target.value
+        });
+    }      
 
     onSubmit(e) {
         e.preventDefault();
         const User = {
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            username: this.state.username,
-            email: this.state.email,
+            firstname: this.state.firstname.toUpperCase(),
+            lastname: this.state.lastname.toUpperCase(),
+            username: this.state.firstname.concat('.'+this.state.lastname),
+            email: this.state.email.toUpperCase(),
             age: this.state.age,
             phone: this.state.phone,
             sex: this.state.sex,
-            location: this.state.location
+            location: this.state.location.toUpperCase()
+        };
+        const Donar = {
+            userID: this.props.match.params.id,
+            firstname: this.state.firstname.toUpperCase(),
+            lastname: this.state.lastname.toUpperCase(),
+            email: this.state.email.toUpperCase(),
+            diseases: this.state.diseases.toUpperCase(),
+            blood_type: this.state.bloodtype.toUpperCase(),
+            weight: this.state.weight,
+            userID: this.props.match.params.id
         };
         console.log(User)
         axios.post(url+'/update/'+this.props.match.params.id, User)
             .then(res => console.log(res.data));
-        
+         axios.post(url+'/createDonar/'+this.props.match.params.id, Donar)
+            .then(res => console.log(Donar,"added this"));
         this.props.history.push('/');
     }
 
@@ -216,7 +243,7 @@ onChangeLastName(e) {
                                 />
                     </div>
                     <div className="form-group">
-                        <label>Diseases: </label>
+                        <label>Medical Condition(s): </label>
                         <input 
                                 type="text" 
                                 className="form-control"
@@ -224,9 +251,27 @@ onChangeLastName(e) {
                                 onChange={this.onChangeDiseases}
                                 />
                     </div>
+                    <div className="form-group">
+                        <label>Weight: </label>
+                        <input 
+                                type="number" 
+                                className="form-control"
+                                value={this.state.weight}
+                                onChange={this.onChangeWeight}
+                                />
+                    </div>
+                    <div className="form-group">
+                        <label>Blood Type: </label>
+                        <input 
+                                type="text" 
+                                className="form-control"
+                                value={this.state.bloodtype}
+                                onChange={this.onChangeBloodType}
+                                />
+                    </div>
                                      
                     <div className="form-group">
-                        <input type="submit" value="Update User" className="btn btn-primary" />
+                        <input type="submit" value="Update User with Donar information" className="btn btn-primary" />
                     </div>
                 </form>
             </div>
